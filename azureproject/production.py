@@ -41,7 +41,7 @@ DATABASES = {
         'PASSWORD': 'set with get_token()'
     }
 }
-
+get_token()
 CACHES = {
         "default": {  
             "BACKEND": "django_redis.cache.RedisCache",
