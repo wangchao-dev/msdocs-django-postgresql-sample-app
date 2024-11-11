@@ -41,7 +41,8 @@ DATABASES = {
         'NAME': conn_str_params['dbname'],
         'HOST': conn_str_params['host'],
         'USER': conn_str_params['user'],
-        'PASSWORD': token.token
+        'PASSWORD': token.token,
+        'OPTIONS': {'sslmode': 'require'}
     }
 }
 print(DATABASES)
