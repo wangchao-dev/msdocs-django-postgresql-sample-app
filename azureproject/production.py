@@ -37,11 +37,12 @@ print(conn_str)
 conn_str_params = {pair.split('=')[0]: pair.split('=')[1] for pair in conn_str.split(' ')}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': conn_str_params['dbname'],
         'HOST': conn_str_params['host'],
         'USER': conn_str_params['user'],
         'PASSWORD': token.token,
+        'PORT':'5432',
         'OPTIONS': {'sslmode': 'require'}
     }
 }
