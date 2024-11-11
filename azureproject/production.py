@@ -42,6 +42,7 @@ DATABASES = {
         'PASSWORD': 'set with get_token()'
     }
 }
+print(DATABASES)
 get_token()
 CACHES = {
         "default": {  
