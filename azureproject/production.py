@@ -1,8 +1,8 @@
 import os
-
 from .settings import *  # noqa
 from .settings import BASE_DIR
-from .get_token import get_token
+from azure.identity import DefaultAzureCredential
+import django.conf as conf
 
 # Configure the domain name using the environment variable
 # that Azure automatically creates for us.
@@ -26,6 +26,8 @@ MIDDLEWARE = [
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+azure_credential = DefaultAzureCredential()
+token = azure_credential.get_token("https://ossrdbms-aad.database.windows.net")
 
 # Configure Postgres database based on connection string of the libpq Keyword/Value form
 # https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
@@ -39,11 +41,10 @@ DATABASES = {
         'NAME': conn_str_params['dbname'],
         'HOST': conn_str_params['host'],
         'USER': conn_str_params['user'],
-        'PASSWORD': 'set with get_token()'
+        'PASSWORD': token.token
     }
 }
 print(DATABASES)
-get_token()
 CACHES = {
         "default": {  
             "BACKEND": "django_redis.cache.RedisCache",
